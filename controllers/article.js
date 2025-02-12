@@ -5,8 +5,6 @@ const sequelize = new Sequelize(
 
 const models = require("../models");
 
-const Article = require("../models/article")(sequelize, Sequelize.DataTypes);
-
 const getAllArticles = (req, res) => {
   models.Article.findAll()
     .then((articles) => {
