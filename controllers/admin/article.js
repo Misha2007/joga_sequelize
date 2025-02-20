@@ -41,7 +41,7 @@ const updateArticle = (req, res) => {
       body: body,
       published: new Date().toISOString().slice(0, 19).replace("T", " "),
     },
-    { where: { articleId: req.params.id } }
+    { where: { id: req.params.id } }
   )
     .then((article) => {
       console.log(article);
@@ -54,4 +54,19 @@ const updateArticle = (req, res) => {
     });
 };
 
-module.exports = { createArticle, updateArticle };
+const deleteArticle = (req, res) => {
+  const deletedArticle = models.Article.destroy({
+    where: { id: req.params.id },
+  })
+    .then((article) => {
+      console.log(article);
+      res
+        .status(200)
+        .json({ message: `deleted article with id ${req.params.id}` });
+    })
+    .catch((error) => {
+      res.status(500).send(error.message);
+    });
+};
+
+module.exports = { createArticle, updateArticle, deleteArticle };
